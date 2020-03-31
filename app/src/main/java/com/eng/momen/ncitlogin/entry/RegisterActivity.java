@@ -111,11 +111,12 @@ public class RegisterActivity extends Activity {
             if (serverResponse != null && !serverResponse.equals("")) {
                 Log.d(TAG, "onPostExecute: "+serverResponse);
 
+                // parseRegisterResponse will return true if register success
                 if (JSONUtils.parseRegisterResponse(serverResponse,mContext)){
                     if (TextUtils.isEmpty(UserInfo.feedbackMessage)){
                         Toast.makeText(getBaseContext(),UserInfo.feedbackMessage,Toast.LENGTH_LONG).show();
                     }
-
+                    // save user information
                     SharedPreferences data;
                     SharedPreferences.Editor editor;
                     data = mContext.getSharedPreferences(PREFS_USER_INFO, Context.MODE_PRIVATE);
@@ -123,6 +124,7 @@ public class RegisterActivity extends Activity {
                     UserInfo.userName = userName;
                     editor.putString(PREFS_USER_NAME, UserInfo.userName);
                     editor.commit();
+                    // start main activity
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     startActivity(intent);
 

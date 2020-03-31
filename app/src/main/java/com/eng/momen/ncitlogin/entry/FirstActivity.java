@@ -18,12 +18,14 @@ public class FirstActivity extends Activity {
     }
 
     public void login(View view) {
+        // if login button press open login activity
         Intent intent =  new Intent(this,LoginActivity.class);
         this.startActivity(intent);
         finish();
     }
 
     public void register(View view) {
+        // if register button press open register activity
         Intent intent =  new Intent(this,RegisterActivity.class);
         this.startActivity(intent);
         finish();

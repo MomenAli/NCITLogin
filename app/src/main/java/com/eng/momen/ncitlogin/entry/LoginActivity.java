@@ -113,13 +113,15 @@ public class LoginActivity extends Activity {
                 }
                 if (UserInfo.id != -1){
 
-
+                    // if user id != -1 then login success
+                    // save information about the user
                     SharedPreferences data;
                     SharedPreferences.Editor editor;
                     data = mContext.getSharedPreferences(PREFS_USER_INFO, Context.MODE_PRIVATE);
                     editor = data.edit();
                     editor.putString(PREFS_USER_NAME, UserInfo.userName);
                     editor.commit();
+                    // start the main activity
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     startActivity(intent);
                     finish();
