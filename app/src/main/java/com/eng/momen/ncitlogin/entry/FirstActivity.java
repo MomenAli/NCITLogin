@@ -2,12 +2,14 @@ package com.eng.momen.ncitlogin.entry;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.eng.momen.ncitlogin.R;
 
-public class FirstActivity extends AppCompatActivity {
+public class FirstActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,9 +18,14 @@ public class FirstActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        //Intent intent =  new Intent(this,Lo)
+        Intent intent =  new Intent(this,LoginActivity.class);
+        this.startActivity(intent);
+        finish();
     }
 
     public void register(View view) {
+        Intent intent =  new Intent(this,RegisterActivity.class);
+        this.startActivity(intent);
+        finish();
     }
 }

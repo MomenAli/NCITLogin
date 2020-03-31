@@ -4,6 +4,94 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray"
     tools:context=".entry.LoginActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_fixed_hight"
+        android:text="@string/login_string"
+        style="@style/Text_Header"
+        app:layout_constraintTop_toTopOf="@+id/guideline1"
+        app:layout_constraintBottom_toTopOf="@id/etUserName"
+        android:layout_marginBottom="@dimen/large"
+        />
+    <EditText
+        android:id="@+id/etUserName"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_fixed_hight"
+        android:hint="@string/user_name_hint_hint"
+        android:drawableRight="@drawable/ic_person_24dp"
+        android:drawableStart="@drawable/ic_person_24dp"
+        android:background="@drawable/rounded_stroke_white"
+        android:layoutDirection="rtl"
+        style="@style/edit_text"
+        android:layout_margin="@dimen/medium"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/etPassword"
+        android:drawableLeft="@drawable/ic_person_24dp"/>
+
+
+
+
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_fixed_hight"
+        android:hint="@string/password_hint"
+        style="@style/edit_text"
+        android:layout_margin="@dimen/medium"
+        android:drawableRight="@drawable/ic_lock_24dp"
+        android:drawableStart="@drawable/ic_lock_24dp"
+        android:drawableLeft="@drawable/ic_lock_24dp"
+        android:background="@drawable/rounded_stroke_white"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+
+        />
+
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_fixed_hight"
+        android:layout_margin="@dimen/medium"
+        android:background="@drawable/rounded_btn"
+        android:onClick="login"
+        android:gravity="center"
+        style="@style/Text_btn"
+        android:padding="@dimen/small"
+        android:elevation="2dp"
+        android:translationZ="12dp"
+        android:text="@string/register_string"
+        android:textColor="#fff"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/hyperlinkForgetMyPassword"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/hyperlinkForgetMyPassword"
+        android:layout_height="@dimen/item_fixed_hight"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:gravity="center"
+        android:textColor="#536dfe"
+        android:text="@string/hyperlinkForgetMyPassword_message"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+
+        />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

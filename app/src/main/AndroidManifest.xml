@@ -12,10 +12,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
         <activity android:name=".entry.RegisterActivity"></activity>
-        <activity android:name=".entry.LoginActivity"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"/>
+        <activity android:name=".entry.LoginActivity"/>
         <activity android:name=".entry.FirstActivity"
             android:theme="@style/fullScreen"/>
         <activity android:name=".MainActivity" >
