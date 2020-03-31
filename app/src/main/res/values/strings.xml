@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NCITLogin</string>
+    <string name="login_string">تسجيل دخول</string>
+    <string name="register_string">انشاء حساب</string>
+</resources>
