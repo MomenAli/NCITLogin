@@ -28,6 +28,12 @@
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="Text_Header2" parent="fullScreen">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">?colorPrimary</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
     <style name="fullScreen" parent="@android:style/Theme.Holo.NoActionBar.Fullscreen">
     </style>
 </resources>

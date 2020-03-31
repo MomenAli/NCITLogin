@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -111,7 +112,7 @@ public class RegisterActivity extends Activity {
                 Log.d(TAG, "onPostExecute: "+serverResponse);
 
                 if (JSONUtils.parseRegisterResponse(serverResponse,mContext)){
-                    if (!UserInfo.feedbackMessage.isEmpty()){
+                    if (TextUtils.isEmpty(UserInfo.feedbackMessage)){
                         Toast.makeText(getBaseContext(),UserInfo.feedbackMessage,Toast.LENGTH_LONG).show();
                     }
 
@@ -119,6 +120,7 @@ public class RegisterActivity extends Activity {
                     SharedPreferences.Editor editor;
                     data = mContext.getSharedPreferences(PREFS_USER_INFO, Context.MODE_PRIVATE);
                     editor = data.edit();
+                    UserInfo.userName = userName;
                     editor.putString(PREFS_USER_NAME, UserInfo.userName);
                     editor.commit();
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
@@ -126,7 +128,7 @@ public class RegisterActivity extends Activity {
 
                     finish();
                 }else{
-                    if (!UserInfo.feedbackMessage.isEmpty()){
+                    if (TextUtils.isEmpty(UserInfo.feedbackMessage)){
                         Toast.makeText(getBaseContext(),UserInfo.feedbackMessage,Toast.LENGTH_LONG).show();
                     }
                 }

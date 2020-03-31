@@ -12,4 +12,6 @@
     <string name="register_not_seccess_message">لا يمكن التسجيل ,ربما تكون سجلت من قبل</string>
     <string name="login_failed_message">إسم المستخدم او كلمه السر غير صحيحة.</string>
     <string name="hyperlinkForgetMyPassword_message"><u>نسيت كلمة المرور؟</u></string>
+    <string name="Hello_string">مرحبــــا</string>
+    <string name="signout_string">تسجيل خروج</string>
 </resources>
