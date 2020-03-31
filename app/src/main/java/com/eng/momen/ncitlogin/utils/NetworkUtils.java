@@ -96,14 +96,12 @@ public class NetworkUtils {
         }
     }
 
-    public static String createDataForRegister(String name, String id, String pass) throws UnsupportedEncodingException {
+    public static String createDataForRegister(String name,String pass) throws UnsupportedEncodingException {
         // Create data variable for sent values to server
 
         String data = URLEncoder.encode(NAME_PARAM, "UTF-8")
                 + "=" + URLEncoder.encode(name, "UTF-8");
 
-        data += "&" + URLEncoder.encode(ID_PARAM, "UTF-8") + "="
-                + URLEncoder.encode(id, "UTF-8");
 
         data += "&" + URLEncoder.encode(PASSWORD_PARAM, "UTF-8")
                 + "=" + URLEncoder.encode(pass, "UTF-8");
@@ -126,7 +124,7 @@ public class NetworkUtils {
 
 
     public static String postResponseToHttpUrl(URL url, String data) throws IOException {
-        Log.d(TAG, "getResponseFromHttpUrl: ");
+        Log.d(TAG, "postResponseFromHttpUrl: "+url.toString()+data);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         BufferedReader reader = null;
         try {

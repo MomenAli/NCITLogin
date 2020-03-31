@@ -1,21 +1,16 @@
 package com.eng.momen.ncitlogin.utils;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.example.maghsalty.fragments.income.Income;
-import com.example.maghsalty.fragments.state.State;
-import com.example.maghsalty.fragments.wait.WaitTask;
-import com.example.maghsalty.user.UserInfo;
+import com.eng.momen.ncitlogin.R;
+import com.eng.momen.ncitlogin.user.UserInfo;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
 
 
 /**
@@ -23,139 +18,15 @@ import java.util.ArrayList;
  */
 
 public class JSONUtils {
-    private static final String waitFile = "waiting.json";
-    private static final String incomeFile = "income.json";
-
-
-    private static final String TAG = "JSONUtils";
-    /* exercise json Object names */
-    final static String OWN_ID = "id";
-    final static String OWN_TYPE = "order_type";
-    final static String OWN_TIME = "order_created_time";
-    final static String OWN_ADDRESS = "delivery_address";
-    final static String OWN_PRICE = "total_price";
-    final static String OWN_PLACE_NAME = "place_name";
-    final static String OWN_PICKUP_TIME = "order_pickup_time";
-    final static String OWN_RECIEVE_ADDRESS = "recieve_address";
-    final static String OWN_PAY_WAY = "pay_way";
-    final static String OWN_CUSTOMER_NAME = "customer_name";
-    final static String OWN_WAIT_ARRAY = "waiting";
-
-
-
-    // wait items
-    final static String OWN_CODE= "code";
-    final static String OWN_DATA= "data";
-    final static String OWN_ORDER_ID = "order_id";
-    final static String OWN_STATUES = "order_status";
-    final static String OWN_CREATION_TIME = "order_created_time";
-    final static String OWN_TOTAL_PRICE = "total_price";
-    final static String OWN_SERVICE_NAME= "Service_name";
-
-
-    public static ArrayList getWaitTaskList(Context context , String JSONStr) throws JSONException {
-
-        /*{"code":200,
-        "data":[
-        {"order_id":63
-        ,"order_status":"under-approval"
-        ,"delivery_address":"Address:Egypt,Cairo,Nasr City,El Methak StreetHouseNumber:5BuildNumber:1FloorNumber:8HouseType:owner",
-        "order_created_time":"2019-04-05 23:58:26",
-        "order_pickup_time":"2012-09-19 23:11:03",
-        "total_price":102,
-        "order_type":[
-        {"Service_name":"special care"}
-        ]
-        }
-        ]
-        }*/
-
-        ArrayList<WaitTask> mWaitTasksList = new ArrayList<>();
-        JSONObject mainObject = new JSONObject(JSONStr);
-        JSONArray mainArray = null;
-
-        mainArray = mainObject.getJSONArray(OWN_DATA);
-        JSONObject waitObject;
-        for (int i = 0; i < mainArray.length(); i++) {
-            WaitTask waitTask = new WaitTask();
-            waitObject = mainArray.getJSONObject(i);
-            waitTask.setId(Integer.valueOf(waitObject.getString(OWN_ORDER_ID)));
-            waitTask.setDelivery_address(waitObject.getString(OWN_ADDRESS));
-            waitTask.setCreation_time(waitObject.getString(OWN_CREATION_TIME));
-            waitTask.setPrice(Integer.valueOf(waitObject.getString(OWN_TOTAL_PRICE)));
-            waitTask.setPickup_time(waitObject.getString(OWN_PICKUP_TIME));
-            waitTask.setStatues(waitObject.getString(OWN_STATUES));
-            JSONArray JsonTypeArray = waitObject.getJSONArray(OWN_TYPE);
-            String type = "";
-            for (int j = 0 ; j < JsonTypeArray.length();j++) {
-                JSONObject serveObject = JsonTypeArray.getJSONObject(j);
-                type += serveObject.getString(OWN_SERVICE_NAME);
-            }
-            waitTask.setType(type);
-            mWaitTasksList.add(waitTask);
-        }
-        return mWaitTasksList;
-    }
-
-    public static ArrayList getStateTaskList(Context context) throws JSONException {
-        ArrayList<State> mStateTasksList = new ArrayList<>();
-        String JSONStr = loadJSONFromAsset(context, waitFile);
-        JSONObject mainObject = new JSONObject(JSONStr);
-        JSONArray mainArray = null;
-        mainArray = mainObject.getJSONArray(OWN_WAIT_ARRAY);
-
-
-        JSONObject stateObject;
-        for (int i = 0; i < mainArray.length(); i++) {
-            State state = new State();
-            stateObject = mainArray.getJSONObject(i);
-            state.setId(Integer.valueOf(stateObject.getString(OWN_ID)));
-            state.setAddress(stateObject.getString(OWN_ADDRESS));
-            state.setDeliver_time(stateObject.getString(OWN_TIME));
-            state.setPrice(Integer.valueOf(stateObject.getString(OWN_PRICE)));
-            state.setType(stateObject.getString(OWN_TYPE));
-            mStateTasksList.add(state);
-        }
-        return mStateTasksList;
-    }
-
-    final static String OWN_EARNED = "earned";
-    final static String OWN_INCOME_ARRAY = "income";
-
-    public static ArrayList getIncomeList(Context context) throws JSONException {
-        ArrayList<Income> mIncomeList = new ArrayList<>();
-        String JSONStr = loadJSONFromAsset(context, incomeFile);
-        Log.d(TAG, "getIncomeList: " + JSONStr);
-        JSONObject mainObject = new JSONObject(JSONStr);
-        JSONArray mainArray = null;
-        mainArray = mainObject.getJSONArray(OWN_INCOME_ARRAY);
-        Log.d(TAG, "getIncomeList: mainArray " + mainArray.toString());
-
-        JSONObject incomeObject;
-        for (int i = 0; i < mainArray.length(); i++) {
-            Income income = new Income();
-            incomeObject = mainArray.getJSONObject(i);
-            income.setId(Integer.valueOf(incomeObject.getString(OWN_ID)));
-            income.setStatue(incomeObject.getString(OWN_STATUES));
-            income.setAmount(Integer.valueOf(incomeObject.getString(OWN_EARNED)));
-            mIncomeList.add(income);
-        }
-        Log.d(TAG, "getIncomeList: number " + mIncomeList.size());
-        return mIncomeList;
-    }
-
 
     // parsing user data
-    public static void parseUserInfo(String jsonStr) throws JSONException {
+    public static void parseUserInfo(String jsonStr,Context mContext) throws JSONException {
 
         final String OWM_MESSAGE_CODE = "code";
-        final String MAIN_TAG = "data";
-        final String OWN_FIRST_NAME = "firstName";
-        final String OWN_ID = "id";
-        final String OWN_MOBILE = "mobile";
-        final String OWN_EMAIL = "email";
-        final String OWN_MESSAGE = "message";
-        final String OWN_PASSWORD = "password";
+        final String OWN_NAME = "user_name";
+        final String OWN_ID = "user_id";
+        final String OWN_ERROR_ID = "error_id";
+        final String OWN_ERROR_NAME= "error_name";
 
         JSONObject mainObject = new JSONObject(jsonStr);
         if (mainObject.has(OWM_MESSAGE_CODE)) {
@@ -168,29 +39,17 @@ public class JSONUtils {
                     /* Location invalid */
                     return;
                 default:
-                    /* Server probably down */
-                    try {
-                        JSONObject messageObj = mainObject.getJSONObject(OWN_MESSAGE);
 
-                        if (messageObj.has(OWN_PASSWORD)) {
-                            UserInfo.feedbackMessage = messageObj.getString(OWN_PASSWORD);
-                        } else if (messageObj.has(OWN_EMAIL)) {
-                            UserInfo.feedbackMessage = messageObj.getString(OWN_EMAIL);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        UserInfo.feedbackMessage = mainObject.getString(OWN_MESSAGE);
-                    }
                     return;
             }
         }
-        JSONObject dataObject = mainObject.getJSONObject(MAIN_TAG);
-        UserInfo.id = dataObject.getInt(OWN_ID);
-        UserInfo.userName = dataObject.getString(OWN_FIRST_NAME);
-        UserInfo.email = dataObject.getString(OWN_EMAIL);
-        UserInfo.mobile = dataObject.getString(OWN_MOBILE);
-        if (dataObject.has(OWN_MESSAGE))
-        UserInfo.feedbackMessage = dataObject.getString(OWN_MESSAGE);
+        if(mainObject.has(OWN_ID)) {
+            UserInfo.userName = mainObject.getString(OWN_NAME);
+            UserInfo.id = Integer.parseInt(mainObject.getString(OWN_ID));
+        }
+        else if(mainObject.has(OWN_ERROR_ID)){
+            UserInfo.feedbackMessage = mContext.getString(R.string.login_failed_message);
+        }
     }
 
     public static String loadJSONFromAsset(Context context, String fileName) {
@@ -211,4 +70,26 @@ public class JSONUtils {
     }
 
 
+    public static boolean parseRegisterResponse(String jsonStr,Context mContext) {
+        final String OWN_RESPONSE_ID = "response_id";
+        final String OWN_RESPONSE_NAME= "response_name";
+        final String OWN_ERROR_ID = "error_id";
+        final String OWN_ERROR_NAME= "error_name";
+
+        try {
+            JSONObject mainObject = new JSONObject(jsonStr);
+            if (mainObject.has(OWN_RESPONSE_ID)) {
+                UserInfo.feedbackMessage = mContext.getString(R.string.register_success_message);
+                return true;
+            }
+            if (mainObject.has(OWN_ERROR_ID)) {
+                UserInfo.feedbackMessage = mContext.getString(R.string.register_not_seccess_message);
+                return false;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

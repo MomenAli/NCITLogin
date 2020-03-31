@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">NCITLogin</string>
     <string name="login_string">تسجيل دخول</string>
-    <string name="register_string">انشاء حساب</string>
+    <string name="creat_account_string">إنشاء حساب</string>
+    <string name="register_string">تسجـــيل</string>
+    <string name="password_hint">كلمه السر</string>
+    <string name="repeat_password_hint">تكرار كلمه السر</string>
+    <string name="user_name_hint_hint">إسم المستخدم</string>
+    <string name="complete_you_information_message">أكمل ادخال البينات</string>
+    <string name="password_not_matched_message">كلمة السر غير متطابقه</string>
+    <string name="register_success_message">تم التسجيل بنجاح</string>
+    <string name="register_not_seccess_message">لا يمكن التسجيل ,ربما تكون سجلت من قبل</string>
+    <string name="login_failed_message">إسم المستخدم او كلمه السر غير صحيحة.</string>
 </resources>
