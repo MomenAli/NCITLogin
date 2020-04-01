@@ -3,6 +3,8 @@ package com.eng.momen.ncitlogin.utils;
 import android.content.Context;
 
 import com.eng.momen.ncitlogin.R;
+import com.eng.momen.ncitlogin.user.AppDatabase;
+import com.eng.momen.ncitlogin.user.User;
 import com.eng.momen.ncitlogin.user.UserInfo;
 
 import org.json.JSONException;
@@ -20,7 +22,7 @@ import java.net.HttpURLConnection;
 public class JSONUtils {
 
     // parsing user data
-    public static void parseUserInfo(String jsonStr,Context mContext) throws JSONException {
+    public static User parseUserInfo(String jsonStr, Context mContext) throws JSONException {
 
         final String OWM_MESSAGE_CODE = "code";
         final String OWN_NAME = "user_name";
@@ -37,19 +39,25 @@ public class JSONUtils {
                     break;
                 case HttpURLConnection.HTTP_NOT_FOUND:
                     /* Location invalid */
-                    return;
+                    return null;
                 default:
 
-                    return;
+                    return null;
             }
         }
         if(mainObject.has(OWN_ID)) {
-            UserInfo.userName = mainObject.getString(OWN_NAME);
-            UserInfo.id = Integer.parseInt(mainObject.getString(OWN_ID));
+
+            String userName = mainObject.getString(OWN_NAME);
+            String id = mainObject.getString(OWN_ID);
+
+            User user =  new User(userName,id);
+            return user;
+
         }
         else if(mainObject.has(OWN_ERROR_ID)){
             UserInfo.feedbackMessage = mContext.getString(R.string.login_failed_message);
         }
+        return null;
     }
 
     public static String loadJSONFromAsset(Context context, String fileName) {

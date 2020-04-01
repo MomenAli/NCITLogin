@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.eng.momen.ncitlogin.MainActivity;
 import com.eng.momen.ncitlogin.R;
+import com.eng.momen.ncitlogin.user.AppDatabase;
+import com.eng.momen.ncitlogin.user.User;
 import com.eng.momen.ncitlogin.user.UserInfo;
 import com.eng.momen.ncitlogin.utils.JSONUtils;
 import com.eng.momen.ncitlogin.utils.NetworkUtils;
@@ -41,7 +43,9 @@ public class LoginActivity extends Activity {
     @BindView(R.id.etPassword)
     EditText etPassword;
 
-    SharedPreferences sharedPreferences ;
+    // Member variable for the database
+    private AppDatabase mDB;
+
     Context mContext;
     String userName;
     String password;
@@ -54,7 +58,8 @@ public class LoginActivity extends Activity {
 
         mContext = this;
         ButterKnife.bind(this);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        mDB = AppDatabase.getsInstance(getApplicationContext());
     }
 
     public void login(View view) {
@@ -106,21 +111,18 @@ public class LoginActivity extends Activity {
             Log.d(TAG, "onPostExecute: "+serverResponse);
             if (serverResponse != null && !serverResponse.equals("")) {
                 Log.d(TAG, "onPostExecute: "+serverResponse);
+                User user = null;
                 try {
-                    JSONUtils.parseUserInfo(serverResponse,mContext);
+                    user = JSONUtils.parseUserInfo(serverResponse,mContext);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                if (UserInfo.id != -1){
+                if (user != null){
 
-                    // if user id != -1 then login success
+                    // if user != null then login success
                     // save information about the user
-                    SharedPreferences data;
-                    SharedPreferences.Editor editor;
-                    data = mContext.getSharedPreferences(PREFS_USER_INFO, Context.MODE_PRIVATE);
-                    editor = data.edit();
-                    editor.putString(PREFS_USER_NAME, UserInfo.userName);
-                    editor.commit();
+                    mDB.userDao().insertUser(user);
+
                     // start the main activity
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     startActivity(intent);

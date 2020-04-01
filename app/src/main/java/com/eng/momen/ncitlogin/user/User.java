@@ -1,5 +1,6 @@
 package com.eng.momen.ncitlogin.user;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,11 +8,13 @@ import androidx.room.PrimaryKey;
 @Entity
 public class User {
 
-    @ColumnInfo(name = "user_name")
-    public String userName;
-
+    @NonNull
+    @PrimaryKey
     @ColumnInfo(name = "user_id")
     public String userID;
+
+    @ColumnInfo(name = "user_name")
+    public String userName;
 
 
     public User(String userName, String userID) {

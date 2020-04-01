@@ -121,13 +121,8 @@ public class RegisterActivity extends Activity {
                         Toast.makeText(getBaseContext(),UserInfo.feedbackMessage,Toast.LENGTH_LONG).show();
                     }
                     // save user information
-                    SharedPreferences data;
-                    SharedPreferences.Editor editor;
-                    data = mContext.getSharedPreferences(PREFS_USER_INFO, Context.MODE_PRIVATE);
-                    editor = data.edit();
-                    UserInfo.userName = userName;
-                    editor.putString(PREFS_USER_NAME, UserInfo.userName);
-                    editor.commit();
+                    User user = new User(userName,"1");
+                    mDB.userDao().insertUser(user);
                     // start main activity
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     startActivity(intent);
