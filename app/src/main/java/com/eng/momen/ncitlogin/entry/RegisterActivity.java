@@ -18,6 +18,9 @@ import android.widget.Toast;
 
 import com.eng.momen.ncitlogin.MainActivity;
 import com.eng.momen.ncitlogin.R;
+import com.eng.momen.ncitlogin.user.AppDatabase;
+import com.eng.momen.ncitlogin.user.User;
+import com.eng.momen.ncitlogin.user.UserDao;
 import com.eng.momen.ncitlogin.user.UserInfo;
 import com.eng.momen.ncitlogin.utils.JSONUtils;
 import com.eng.momen.ncitlogin.utils.NetworkUtils;
@@ -41,8 +44,8 @@ public class RegisterActivity extends Activity {
     @BindView(R.id.etPassword2)
     EditText etPassword2;
 
-
-    SharedPreferences sharedPreferences ;
+    // Member variable for the database
+    private AppDatabase mDB;
 
 
     Context mContext;
@@ -55,7 +58,8 @@ public class RegisterActivity extends Activity {
         setContentView(R.layout.activity_register);
         mContext = this;
         ButterKnife.bind(this);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        mDB = AppDatabase.getsInstance(getApplicationContext());
     }
 
     public void register(View view) {

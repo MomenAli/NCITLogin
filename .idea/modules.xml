@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/NCITLogin.iml" filepath="$PROJECT_DIR$/NCITLogin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NCITLogin.iml" filepath="$PROJECT_DIR$/NCITLogin.iml" group="NCITLogin" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="NCITLogin/app" />
     </modules>
   </component>
 </project>
