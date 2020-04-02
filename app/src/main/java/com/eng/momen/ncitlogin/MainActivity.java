@@ -1,7 +1,11 @@
 package com.eng.momen.ncitlogin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,7 +23,7 @@ import com.eng.momen.ncitlogin.user.AppDatabase;
 import com.eng.momen.ncitlogin.user.User;
 import com.eng.momen.ncitlogin.user.UserInfo;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
 
 
@@ -31,38 +35,40 @@ public class MainActivity extends Activity {
     // Member variable for the database
     private AppDatabase mDB;
     Context mContext;
-    User user;
+    LiveData<User> user;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mContext = this;
+        mContext = getBaseContext();
         // check if the user is login before
-        mDB = AppDatabase.getsInstance(getApplicationContext());
-        AppExecuters.getsInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                user = mDB.userDao().loadUser();
+        setUpViewModel();
 
-                if(user == null ){
+    }
+
+    private void setUpViewModel() {
+        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        viewModel.getUser().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                if(user== null ){
+
                     // if user isn't login start first activity
                     Intent intent = new Intent(mContext, FirstActivity.class);
                     mContext.startActivity(intent);
                     finish();
                 }
-
             }
         });
-
     }
-
 
 
     public void signout(View view) {
         //remove all the user information
-        final User tempUser = new User(user.userName,user.userID);
+        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        final User tempUser = new User(viewModel.getUser().getValue().userName,viewModel.getUser().getValue().userID);
         AppExecuters.getsInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {

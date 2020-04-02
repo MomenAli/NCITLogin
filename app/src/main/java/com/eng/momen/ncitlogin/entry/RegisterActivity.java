@@ -81,6 +81,7 @@ public class RegisterActivity extends Activity {
         if(!isNetworkAvailable())
         {
             Toast.makeText(this,"لا يوجد إنترنت",Toast.LENGTH_LONG).show();
+            return;
         }
         new RegisterTask().execute();
     }

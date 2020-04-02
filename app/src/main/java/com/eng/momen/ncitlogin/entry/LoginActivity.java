@@ -77,6 +77,7 @@ public class LoginActivity extends Activity {
         if(!isNetworkAvailable())
         {
             Toast.makeText(this,"لا يوجد إنترنت",Toast.LENGTH_LONG).show();
+            return;
         }
         new LoginTask().execute();
     }

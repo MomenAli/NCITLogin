@@ -9,7 +9,7 @@ import androidx.room.Query;
 @Dao
 public interface UserDao {
     @Query("SELECT * FROM user where 1")
-    User loadUser();
+    LiveData<User> loadUser();
 
     @Insert
     void insertUser(User user);

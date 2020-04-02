@@ -14,11 +14,12 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".entry.RegisterActivity"></activity>
-        <activity android:name=".entry.LoginActivity"/>
+        <activity android:name=".entry.RegisterActivity" android:theme="@style/fullScreen"></activity>
+        <activity android:name=".entry.LoginActivity" android:theme="@style/fullScreen"/>
         <activity android:name=".entry.FirstActivity"
             android:theme="@style/fullScreen"/>
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity"
+            android:theme="@style/fullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
