@@ -54,9 +54,7 @@ public class JSONUtils {
             return user;
 
         }
-        else if(mainObject.has(OWN_ERROR_ID)){
-            UserInfo.feedbackMessage = mContext.getString(R.string.login_failed_message);
-        }
+
         return null;
     }
 
@@ -87,11 +85,9 @@ public class JSONUtils {
         try {
             JSONObject mainObject = new JSONObject(jsonStr);
             if (mainObject.has(OWN_RESPONSE_ID)) {
-                UserInfo.feedbackMessage = mContext.getString(R.string.register_success_message);
                 return true;
             }
             if (mainObject.has(OWN_ERROR_ID)) {
-                UserInfo.feedbackMessage = mContext.getString(R.string.register_not_seccess_message);
                 return false;
             }
 

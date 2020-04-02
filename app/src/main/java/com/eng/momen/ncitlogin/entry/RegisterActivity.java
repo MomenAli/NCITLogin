@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eng.momen.ncitlogin.AppExecuters;
 import com.eng.momen.ncitlogin.MainActivity;
 import com.eng.momen.ncitlogin.R;
 import com.eng.momen.ncitlogin.user.AppDatabase;
@@ -117,20 +118,24 @@ public class RegisterActivity extends Activity {
 
                 // parseRegisterResponse will return true if register success
                 if (JSONUtils.parseRegisterResponse(serverResponse,mContext)){
-                    if (TextUtils.isEmpty(UserInfo.feedbackMessage)){
-                        Toast.makeText(getBaseContext(),UserInfo.feedbackMessage,Toast.LENGTH_LONG).show();
-                    }
+                    Toast.makeText(getBaseContext(),mContext.getString(R.string.register_success_message),Toast.LENGTH_LONG).show();
+
                     // save user information
                     User user = new User(userName,"1");
-                    mDB.userDao().insertUser(user);
+                    AppExecuters.getsInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            mDB.userDao().insertUser(user);
+                            finish();
+                        }
+                    });
                     // start main activity
                     Intent intent = new Intent(getBaseContext(), MainActivity.class);
                     startActivity(intent);
 
-                    finish();
                 }else{
                     if (TextUtils.isEmpty(UserInfo.feedbackMessage)){
-                        Toast.makeText(getBaseContext(),UserInfo.feedbackMessage,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(),mContext.getString(R.string.register_not_seccess_message),Toast.LENGTH_LONG).show();
                     }
                 }
             }

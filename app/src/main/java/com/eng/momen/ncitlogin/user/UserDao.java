@@ -1,5 +1,6 @@
 package com.eng.momen.ncitlogin.user;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -7,7 +8,7 @@ import androidx.room.Query;
 
 @Dao
 public interface UserDao {
-    @Query("SELECT * FROM User")
+    @Query("SELECT * FROM user where 1")
     User loadUser();
 
     @Insert

@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.eng.momen.ncitlogin.AppExecuters;
 import com.eng.momen.ncitlogin.MainActivity;
 import com.eng.momen.ncitlogin.R;
 import com.eng.momen.ncitlogin.user.AppDatabase;
@@ -117,23 +118,31 @@ public class LoginActivity extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Log.d(TAG, "onPostExecute: "+user);
                 if (user != null){
 
                     // if user != null then login success
                     // save information about the user
-                    mDB.userDao().insertUser(user);
+                    final User temp = new User(user.userName,user.userID);
+                    AppExecuters.getsInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            mDB.userDao().insertUser(temp);
+                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                            startActivity(intent);
+                            Log.d(TAG, "run: insert done");
+                            finish();
+                        }
+                    });
 
                     // start the main activity
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
 
-                }else{
-                    if (!UserInfo.feedbackMessage.isEmpty()){
-                        Toast.makeText(getBaseContext(),UserInfo.feedbackMessage,Toast.LENGTH_LONG).show();
-                    }
+                    return;
+
                 }
             }
+            Toast.makeText(getBaseContext(),mContext.getString(R.string.login_failed_message),Toast.LENGTH_LONG).show();
+
         }
     }
 
